@@ -1,0 +1,63 @@
+{
+  "semi": false,
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "semi": false,
+        "printWidth": 120,
+        "singleQuote": false,
+        "trailingComma": "none",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false,
+        "parser": "flow",
+        "tabWidth": 2,
+        "endOfLine": "auto",
+        "arrowParens": "avoid"
+      }
+    },
+    {
+      "files": "*.html",
+      "options": {
+        "tabWidth": 2,
+        "parser": "html"
+      }
+    },
+    {
+      "files": "*.{css,scss,less,sss}",
+      "options": {
+        "tabWidth": 4,
+        "semi": true,
+        "bracketSpacing": true
+      }
+    },
+    {
+      "files": "*.vue",
+      "options": {
+        "parser": "vue",
+        "vueIndentScriptAndStyle": true,
+        "tabWidth": 2,
+        "trailingComma": "none",
+        "printWidth": 120,
+        "bracketSpacing": true,
+        "jsxBracketSameLine": true,
+        "htmlWhitespaceSensitivity": "ignore"
+      }
+    },
+    {
+      "files": "*.yaml",
+      "options": {
+        "tabWidth": 2,
+        "trailingComma": "none",
+        "singleQuote": true,
+        "parser": "yaml"
+      }
+    },
+    {
+      "files": "*.json",
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
+}

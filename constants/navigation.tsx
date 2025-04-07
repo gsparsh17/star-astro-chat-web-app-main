@@ -1,0 +1,81 @@
+export const navigation = [
+  {
+    title: "Brahma AI",
+    icon: "check",
+    color: "#8E55EA",
+    img:'/images/brahmaAi.svg',
+    url: "/brahma-ai",
+    premium: false,
+  },
+  {
+    title: "Career AI",
+    icon: "check",
+    color: "#0084FF",
+    img:'/images/careerAi.svg',
+    url: "/career-ai",
+    premium: false,
+  },
+  {
+    title: "Relationship AI",
+    icon: "check",
+    color: "#D84C10",
+    img:'/images/relationshipAi.svg',
+    url: "/relationship-ai",
+    comingSoon: true,
+    premium: true,
+  },
+  {
+    title: "Perfect Matchmaking",
+    icon: "check",
+    color: "#52BA69",
+    img:'/images/matchmaking.svg',
+    url: "/matchmaking",
+    comingSoon: true,
+    premium: true,
+  },
+  {
+    title: "Numerology AI",
+    icon: "check",
+    color: "#E68A1D",
+    img:'/images/numerologyAi.svg',
+    url: "/numerology-ai",
+    comingSoon: true,
+    premium: false,
+  },
+]
+
+// export const navigation = [
+//   {
+//     title: "Your Cosmic Chart → AI Kundli",
+//     icon: "check",
+//     color: "#8E55EA",
+//     url: "/aiKundli",
+//   },
+//   {
+//     title: "Perfect Matchmaking",
+//     icon: "check",
+//     color: "#0084FF",
+//     url: "/matchmaking",
+//   },
+//   {
+//     title: "Connect With Astrologer",
+//     icon: "check",
+//     color: "#D84C10",
+//     url: "/connect-with-astrologer",
+//     comingSoon: true,
+//   },
+//   {
+//     title: "Accurate Career Advice",
+//     icon: "check",
+//     color: "#52BA69",
+//     url: "#",
+//     comingSoon: true,
+//   },
+//   {
+//     title: "Scan your Palm",
+//     icon: "check",
+//     color: "#E68A1D",
+//     url: "#",
+//     comingSoon: true,
+//   },
+// ]
