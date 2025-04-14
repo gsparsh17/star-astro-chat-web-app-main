@@ -592,14 +592,14 @@ const handleSendClick = async () => {
       : ""
   }
 >
-  <div
-    className="py-5 overflow-y-auto scroll-smooth scrollbar-none"
-    style={{ maxHeight: "70vh" }}
-    ref={chatContainerRef}
-  >
+<div className="py-5 overflow-y-auto scroll-smooth scrollbar-none" style={{ 
+    maxHeight: '70vh',
+    position: 'relative',
+    zIndex: -1 // Explicitly set lower than dropdown
+  }}>
     {showDiv && !chatData && !loading ? (
-      <div className="questions-list grid gap-4">
-        <div className="mb-10 text-center">
+      <div className="questions-list grid gap-4 -z-1">
+        <div className="mb-10 text-center -z-1">
           <div className="h3 leading-[4rem] 2xl:mb-2 2xl:h4">
             Welcome to Star Astro
           </div>

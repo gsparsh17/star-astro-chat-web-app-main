@@ -38,7 +38,7 @@ export const price = [
   },
   {
     id: "1",
-    title: "Standard",
+    title: "basic",
     colorTitle: "#3FDD78",
     popular: true,
     currentPlan: false,
@@ -54,7 +54,7 @@ export const price = [
       "Relationship AI",
       "Perfect Matchmaking", 
     ],
-    planKey: "standard"
+    planKey: "basic"
   }
 ]
 
@@ -79,7 +79,7 @@ export const alternativePrice = [
   },
   {
     id: "1",
-    title: "Standard",
+    title: "basic",
     colorTitle: "#3E90F0",
     popular: false,
     currentPlan: false,
@@ -99,7 +99,7 @@ export const alternativePrice = [
       "Romantic Forecast",
       "Synastry Horoscope",
     ],
-    planKey: "standard",
+    planKey: "basic",
   },
   {
     id: "2",

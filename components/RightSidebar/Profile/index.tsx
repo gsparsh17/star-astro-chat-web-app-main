@@ -99,7 +99,10 @@ const Profile = ({}: ProfileProps) => {
 
   return (
     <>
-      <div className="relative z-10 mr-6 lg:mr-4 md:static">
+      <div className="relative z-[1000] mr-6 lg:mr-4 md:static" style={{
+        isolation: 'isolate',
+        position: 'relative' // Ensure this is relative
+        }}>
         <Menu>
           <Menu.Button 
             className="group relative w-10 h-10 rounded-full transition-shadow ui-open:shadow-[0_0_0_0.25rem_#0084FF]"
@@ -130,12 +133,21 @@ const Profile = ({}: ProfileProps) => {
           <Transition
             enter="transition duration-100 ease-out"
             enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
+            enterTo="transform scale-100 opacity-100 z-[999]"
             leave="transition duration-75 ease-out"
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Menu.Items className="absolute top-full -right-5 w-[19.88rem] mt-[0.9375rem] p-4 bg-n-1 border border-n-2 rounded-2xl shadow-[0px_48px_64px_-16px_rgba(0,0,0,0.25)] md:-right-38 md:w-[calc(100vw-4rem)] dark:bg-n-7 dark:border-n-5">
+            <Menu.Items 
+  className="fixed top-full -right-5 w-[19.88rem] mt-[0.9375rem] p-4 bg-n-1 border border-n-2 rounded-2xl shadow-[0px_48px_64px_-16px_rgba(0,0,0,0.25)] md:-right-38 z-[1001] md:w-[calc(100vw-4rem)] dark:bg-n-7 dark:border-n-5"
+  style={{
+    position: 'fixed',
+    marginTop: '0.9375rem',
+    zIndex: 9999,
+    willChange: 'transform', // Helps with rendering performance
+    transform: 'translateZ(0)' // Creates new stacking context
+  }}
+>
               <div className="flex items-center mb-3">
                 <div className="relative w-15 h-15">
                   <Image

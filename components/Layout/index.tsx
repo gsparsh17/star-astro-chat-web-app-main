@@ -45,14 +45,16 @@ const Layout = ({
       <Head>
         <title>Chat | Star Astro</title>
       </Head>
+      <div className="relative">
       <div
-        className={`pr-6 bg-n-2 md:p-0 md:bg-n-2 dark:bg-n-7 dark:md:bg-n-6 md:overflow-hidden ${
+        className={`pr-6 bg-n-2 md:p-0 md:bg-n-2 dark:bg-n-7 dark:md:bg-n-6 ${
           visibleSidebar
             ? "pl-20 md:pl-0"
             : smallSidebar
             ? "pl-24 md:pl-0"
             : "pl-80 xl:pl-24 md:pl-0"
         }`}
+        style={{ overflow: 'visible' }}
       >
         <LeftSidebar
           value={visibleSidebar}
@@ -71,7 +73,7 @@ const Layout = ({
             className={`relative flex grow w-[100%] max-w-full bg-n-1 rounded-[1.25rem] md:rounded-none dark:bg-n-6`}
           >
             <div
-              className={`relative flex flex-col grow w-[60vw] justify-between ${
+              className={`relative flex flex-col grow w-[60vw] z-1 justify-between ${
                 !hideRightSidebar && "md:pt-18 md:w-0"
               }`}
             >
@@ -117,6 +119,7 @@ const Layout = ({
             onClick={handleClickOverlay}
           />
         )}
+      </div>
       </div>
     </>
   )

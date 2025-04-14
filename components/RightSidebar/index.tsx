@@ -84,7 +84,7 @@ const RightSidebar = ({ className, visible }: RightSidebarProps) => {
         )}
       >
         <div className="absolute top-0 left-0 right-0 flex justify-end items-center h-18 px-9 border-b border-n-3 lg:pr-18 md:pr-16 dark:border-n-5">
-          <Notifications items={notifications} />
+          {/* <Notifications items={notifications} /> */}
           <Profile />
           <button
             className="btn-dark btn-medium"
@@ -97,9 +97,9 @@ const RightSidebar = ({ className, visible }: RightSidebarProps) => {
         {/* Chat History Section */}
         <div className="flex items-center px-9 md:px-6">
           <div className="base2 text-n-4/75">Chat history</div>
-          <div className="ml-3 px-2 bg-n-3 rounded-lg caption1 text-n-4 dark:bg-n-5/50">
+          {/* <div className="ml-3 px-2 bg-n-3 rounded-lg caption1 text-n-4 dark:bg-n-5/50">
             {clean ? "0" : `${chatTitles.length}/100`}
-          </div>
+          </div> */}
           {!clean && chatTitles.length > 0 && (
             <button
               className="group relative ml-auto text-0"
