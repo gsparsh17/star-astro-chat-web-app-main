@@ -30,7 +30,7 @@ const Chat = ({ title, children }: ChatProps) => {
         )}
       </div>
 
-      <div className="grow pb-20 space-y-10 p-6 2xl:p-6 md:p-5" style={{
+      <div className="grow pb-10 space-y-10 p-6 2xl:p-6 md:p-5" style={{
     position: 'relative',
     zIndex: -1,
     overflow: 'visible' // Ensure no clipping

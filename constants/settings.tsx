@@ -9,26 +9,26 @@ export const settings = [
     title: "Credits",
     icon: "lock-1",
   },
-  {
-    id: "purchases",
-    title: "Purchases",
-    icon: "download-fill",
-  },
-  {
-    id: "notifications",
-    title: "Notifications",
-    icon: "bell",
-  },
+  // {
+  //   id: "purchases",
+  //   title: "Purchases",
+  //   icon: "download-fill",
+  // },
+  // {
+  //   id: "notifications",
+  //   title: "Notifications",
+  //   icon: "bell",
+  // },
   {
     id: "refer-and-earn",
     title: "Refer & Earn",
     icon: "lock-1",
   },
-  {
-    id: "additional-settings",
-    title: "Additional Settings",
-    icon: "container",
-  },
+  // {
+  //   id: "additional-settings",
+  //   title: "Additional Settings",
+  //   icon: "container",
+  // },
 
   // {
   //     id: "password",

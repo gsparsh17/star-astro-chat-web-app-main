@@ -500,7 +500,6 @@ const handleSendClick = async () => {
     const endpoint = topic 
       ? `${process.env.BACKEND_URL}/chat/${topic["data"]["_id"]}`
       : `${process.env.BACKEND_URL}/chat/new`;
-
     const response = await axios.post(
       endpoint,
       requestData,
@@ -511,6 +510,7 @@ const handleSendClick = async () => {
         },
       }
     );
+  
 
     setShowDiv(false);
     
@@ -546,7 +546,25 @@ const handleSendClick = async () => {
 
     scrollToBottom();
   } catch (error: any) {
-    // Error handling remains the same
+    console.error("Error sending message:", error);
+    const errorMessage =
+                    "Insufficient credits or credits are expired! Please upgrade your plan to continue using the service.";
+              
+                  toast.custom((t) => (
+                    <div
+                      className={`${
+                        t.visible ? "animate-enter" : "animate-leave"
+                      } max-w-md w-full bg-red-500 shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5 `}
+                    >
+                      <div className="flex-1 w-0 p-4">
+                        <div className="flex items-start">
+                          <div className="ml-3 flex-1">
+                            <p className="mt-1 text-sm text-white">{errorMessage}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ));
   } finally {
     setLoading(false);
     setIsTyping(false);
@@ -592,18 +610,17 @@ const handleSendClick = async () => {
       : ""
   }
 >
-<div className="py-5 overflow-y-auto scroll-smooth scrollbar-none" style={{ 
-    maxHeight: '70vh',
+<div className="overflow-y-auto scroll-smooth scrollbar-none max-h-[75vh] 2xl:max-h-[82vh]" style={{ 
     position: 'relative',
     zIndex: -1 // Explicitly set lower than dropdown
   }}>
     {showDiv && !chatData && !loading ? (
       <div className="questions-list grid gap-4 -z-1">
-        <div className="mb-10 text-center -z-1">
+        <div className="text-center -z-1">
           <div className="h3 leading-[4rem] 2xl:mb-2 2xl:h4">
             Welcome to Star Astro
           </div>
-          <div className="body1 text-n-4 2xl:body1S">
+          <div className="body1 md:text-lg sm:text-sm 2xl:text-2xl text-n-4">
             Chat with the smartest AI - Experience the power of AI with us
           </div>
         </div>
@@ -652,6 +669,8 @@ const handleSendClick = async () => {
     )}
   </div>
 </Chat>
+{pathname!="/" && (
+  <>
           <div className="flex items-center overflow-x-auto scrollbar-hide px-8 py-4 sm:px-2 md:px-2 lg:px-4 xl:px-12">
             <div className="flex flex-nowrap gap-4 px-4">
               {aiKundliQue.map((item) => (
@@ -675,6 +694,8 @@ const handleSendClick = async () => {
             onKeyPress={handleKeyPress}
             // disabled={loading}
           />{" "}
+        </>
+      )}
         </>
         )}
       </>

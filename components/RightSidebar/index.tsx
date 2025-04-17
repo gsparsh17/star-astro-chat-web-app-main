@@ -78,12 +78,12 @@ const RightSidebar = ({ className, visible }: RightSidebarProps) => {
     <>
       <div
         className={twMerge(
-          `flex flex-col lg:w-0 w-[22.5rem] pt-[6rem] bg-n-1 rounded-r-[1.25rem] border-l border-n-3 shadow-[inset_0_1.5rem_3.75rem_rgba(0,0,0,0.1)] 2xl:w-80 lg:rounded-[1.25rem] lg:invisible lg:opacity-0 lg:transition-opacity lg:z-20 lg:border-l-0 lg:shadow-2xl md:fixed md:w-[calc(100%-4rem)] md:border-l md:rounded-none dark:bg-n-6 dark:border-n-5 ${
+          `flex flex-col lg:w-0 w-[22.5rem] pt-[6rem] bg-n-1 rounded-r-[1.25rem] border-l border-n-3 shadow-[inset_0_1.5rem_3.75rem_rgba(0,0,0,0.1)] 2xl:w-80 lg:rounded-[1.25rem] lg:invisible lg:opacity-0 lg:transition-opacity lg:z-20 lg:border-l-0 lg:shadow-2xl md:fixed md:w-[calc(100%-4rem)] md:border-l z-50 md:rounded-none dark:bg-n-6 dark:border-n-5 ${
             visible && "lg:visible lg:opacity-100"
           } ${className}`,
         )}
       >
-        <div className="absolute top-0 left-0 right-0 flex justify-end items-center h-18 px-9 border-b border-n-3 lg:pr-18 md:pr-16 dark:border-n-5">
+        <div className="absolute z-50 top-0 left-0 right-0 flex justify-end items-center h-18 px-9 border-b border-n-3 lg:pr-18 md:pr-16 dark:border-n-5">
           {/* <Notifications items={notifications} /> */}
           <Profile />
           <button

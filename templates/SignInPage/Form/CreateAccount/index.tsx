@@ -12,6 +12,7 @@ type CreateAccountProps = {
 
 const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
   const [email, setEmail] = useState<string>("")
+  const [code, setCode] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
@@ -26,7 +27,7 @@ const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
     try {
       const response = await axios.post(
         `${process.env.BACKEND_URL}/auth/signup`,
-        { email, password },
+        { email, password, referralCode: code },
       )
 
       if (response.data.status === "success") {
@@ -132,6 +133,17 @@ const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
           setPassword(e.target.value)
         }
         required
+      />
+      <Field
+        className="mb-4"
+        classInput="dark:bg-n-7 dark:border-n-7 dark:focus:bg-transparent"
+        placeholder="Referral Code (Optional)"
+        icon="link"
+        type="text"
+        value={code}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setCode(e.target.value)
+        }
       />
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <button

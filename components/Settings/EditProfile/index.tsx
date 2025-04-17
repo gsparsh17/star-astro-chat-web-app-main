@@ -951,7 +951,7 @@ if (userStr) {
             <Icon className="w-8 h-8 dark:fill-n-1" name="profile" />
           )}
         </div>
-        <input
+        {/* <input
           type="file"
           id="profile-upload"
           className="hidden"
@@ -963,7 +963,7 @@ if (userStr) {
           className="btn-stroke-light cursor-pointer"
         >
           Change photo
-        </label>
+        </label> */}
       </div>
 
       <div className="mb-6">
@@ -1184,12 +1184,13 @@ if (userStr) {
         <div className="relative">
           <div className="flex items-center w-full">
             <input
+              value={inputValue} // Ensure value is a primitive string
+              onChange={(e) => setInputValue(e.target.value)} // Update input value
               placeholder="Search for your birth location"
               className={twMerge(
                 "w-full h-13 px-3.5 bg-n-2 border-2 border-n-2 rounded-xl base2 text-n-7 outline-none transition-colors placeholder:text-n-4/50 focus:bg-transparent dark:bg-n-6 dark:border-n-6 dark:text-n-3 dark:focus:bg-transparent",
                 !flagAddress && "border-red-500"
               )}
-              {...bindInput}
             />
             {isBusy && (
               <div className="w-4 h-4 border-2 border-dashed rounded-full border-slate-500 animate-spin ml-2"></div>

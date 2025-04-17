@@ -19,7 +19,6 @@ const SignIn = ({ onForgotPassword }: SignInProps) => {
     e.preventDefault()
     setError(null)
     setIsSubmitting(true)
-
     try {
       const response = await axios.post(
         `${process.env.BACKEND_URL}/auth/signin`,

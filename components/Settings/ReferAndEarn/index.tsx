@@ -1,16 +1,42 @@
-import React, { useState } from "react"
+import { useRef, useState } from "react"
+import { CopyToClipboard } from "react-copy-to-clipboard"
+import { toast } from "react-hot-toast"
+import Modal from "@/components/Modal"
+import Field from "@/components/Field"
+import MultiSelect from "@/components/MultiSelect"
+import Notify from "@/components/Notify"
 
 const ReferAndEarn = () => {
-  const [referralCode, setReferralCode] = useState<string>("STARASTRO25") // Prefilled referral code
+  const [referralCode, setReferralCode] = useState<string>("STARASTRO25")
+  const [baseLink, setBaseLink] = useState<string>("https://starastrogpt.com/")
+  const [link, setLink] = useState<string>("https://starastrogpt.com/sign-in?ref=STARASTRO25")
+  const [selectedOptions, setSelectedOptions] = useState([])
+  const [copied, setCopied] = useState<boolean>(false)
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(referralCode)
-      alert("Referral code copied to clipboard!")
-    } catch (error) {
-      alert("Failed to copy the referral code. Please try again.")
-    }
+  const handleReferralCodeChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const newCode = e.target.value
+    setReferralCode(newCode)
+    updateLinkWithReferral(newCode)
   }
+
+  const updateLinkWithReferral = (code: string) => {
+    const url = new URL(baseLink)
+    url.searchParams.set("ref", code)
+    setLink(url.toString())
+  }
+
+  const onCopy = () => {
+    setCopied(true)
+    toast((t) => (
+      <Notify iconCheck>
+        <div className="ml-3 h6">Link copied</div>
+      </Notify>
+    ))
+  }
+
+  let copyButtonRef = useRef(null)
 
   return (
     <div className="flex flex-col p-6 sm:p-8 md:p-12">
@@ -18,22 +44,54 @@ const ReferAndEarn = () => {
         Invite your friends and earn rewards!
       </h1>
       <p className="text-gray-600 mb-6 sm:text-lg">
-        Share your referral code with friends and enjoy exclusive benefits.
+        Share your referral code or URL with friends and enjoy exclusive benefits.
       </p>
-      <div className="flex items-center w-full shadow rounded mt-6 sm:mt-10 pr-10 sm:pr-0">
-        <input
-          type="text"
-          onChange={(e) => setReferralCode(e.target.value)}
-          value={referralCode}
-          className="flex-grow border-none focus:ring-0 text-white font-medium bg-n-5 px-4 py-2 rounded-l sm:rounded-l-md sm:h-12"
-        />
-        <button
-          onClick={handleCopy}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-r sm:rounded-r-md sm:h-12 sm:ml-4 mt-0"
-        >
-          Copy
-        </button>
-      </div>
+
+      {/* Referral Code Section */}
+      <div className="mb-4 base2 font-semibold text-n-6 dark:text-n-3">
+          Your referral code
+        </div>
+        <div className="relative mb-8">
+          <Field
+            classInput="h-14 pr-[6.25rem] bg-n-2 truncate text-[1rem] text-n-4 border-transparent focus:bg-n-2 md:base2"
+            placeholder="Referral Code"
+            value={referralCode}
+            onChange={handleReferralCodeChange}
+            required
+          />
+          <CopyToClipboard text={referralCode} onCopy={onCopy}>
+            <button
+              className="btn-dark absolute top-1 right-1"
+              type="button"
+            >
+              Copy
+            </button>
+          </CopyToClipboard>
+        </div>
+        
+        {/* Shareable Link Section */}
+        <div className="mb-4 base2 font-semibold text-n-6 dark:text-n-3">
+          Shareable link with your referral code
+        </div>
+        <div className="relative mb-8">
+          <Field
+            classInput="h-14 pr-[6.25rem] bg-n-2 truncate text-[1rem] text-n-4 border-transparent focus:bg-n-2 md:base2"
+            placeholder="Link"
+            value={link}
+            readOnly
+            required
+            onChange={() => {}}
+          />
+          <CopyToClipboard text={link} onCopy={onCopy}>
+            <button
+              className="btn-dark absolute top-1 right-1"
+              ref={copyButtonRef}
+              type="button"
+            >
+              Copy
+            </button>
+          </CopyToClipboard>
+        </div>
     </div>
   )
 }
