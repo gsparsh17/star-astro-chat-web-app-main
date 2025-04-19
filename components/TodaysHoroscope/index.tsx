@@ -86,14 +86,14 @@ const TodayHoroscope: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center p-12 lg:p-4">
+    <div className="flex items-center justify-center p-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-2xl bg-white dark:bg-n-7 rounded-xl shadow-lg overflow-hidden"
+        className="w-full max-w-2xl overflow-hidden"
       >
-        <div className="max-h-[80vh] overflow-y-auto p-6">
+        <div className="max-h-[85vh] overflow-y-auto scrollbar-none sm:pb-4 sm:pt-0 2xl:pt-8">
           <AnimatePresence mode="wait">
             {!horoscopeData ? (
               <motion.form
@@ -132,8 +132,8 @@ const TodayHoroscope: React.FC = () => {
                         key={type}
                         className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors ${
                           watch('astrology') === type 
-                            ? 'bg-primary-1/10 border-primary-1 border-2' 
-                            : 'bg-n-1 dark:bg-n-5 border-2 border-transparent'
+                            ? 'bg-n-3 dark:bg-gray-900 border-primary-1 border-2' 
+                            : 'bg-n-1 dark:bg-n-7 border-2 border-transparent'
                         }`}
                       >
                         <input
@@ -176,8 +176,8 @@ const TodayHoroscope: React.FC = () => {
                         key={sign.name}
                         className={`flex flex-col items-center p-3 rounded-lg cursor-pointer transition-all ${
                           selectedSign === sign.name
-                            ? 'bg-primary-1/20 border-2 border-primary-1 shadow-md'
-                            : 'bg-n-1 dark:bg-n-5 border-2 border-transparent hover:bg-n-3/20'
+                            ? 'bg-n-3 dark:bg-gray-900 border-primary-1 border-2' 
+                            : 'bg-n-1 dark:bg-n-7 border-2 border-transparent'
                         }`}
                       >
                         <input
@@ -214,7 +214,7 @@ const TodayHoroscope: React.FC = () => {
                   <div className="relative">
                     <select
                       className={twMerge(
-                        "w-full h-13 px-4 bg-n-1 dark:bg-n-5 border-2 border-n-3 dark:border-n-5 rounded-xl base2 text-n-7 dark:text-n-1 outline-none appearance-none",
+                        "w-full h-13 px-4 bg-n-1 dark:bg-n-7 border-2 border-n-3 dark:border-n-5 rounded-xl base2 text-n-7 dark:text-n-1 outline-none appearance-none",
                         errors.timezone && "border-red-500"
                       )}
                       {...register('timezone', { required: true })}

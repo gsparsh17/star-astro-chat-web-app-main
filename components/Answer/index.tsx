@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast"
 
 type AnswerProps = {
   children?: React.ReactNode
+  chatid?: string
   loading?: boolean
   time?: string
   scrollToBottom?: () => void
@@ -15,6 +16,7 @@ type AnswerProps = {
 }
 
 const Answer = ({
+  chatid,
   loading,
   time,
   children,
@@ -74,11 +76,21 @@ const Answer = ({
         })
 
         setDisplayedText(formattedText)
+        
+        // If chatid exists, skip typing animation and show full text immediately
+        if (chatid) {
+          setWordIndex(formattedText.length)
+          if (onTypingComplete) onTypingComplete()
+          if (scrollToBottom) scrollToBottom()
+        }
       }
     }
-  }, [loading, children])
+  }, [loading, children, chatid])
 
   useEffect(() => {
+    // Skip typing animation if chatid exists
+    if (chatid) return;
+
     if (!loading && displayedText.length > 0) {
       if (cacheRef?.current) cacheRef.current.startChecking = true
       const interval = setInterval(() => {
@@ -97,7 +109,7 @@ const Answer = ({
 
       return () => clearInterval(interval)
     }
-  }, [loading, displayedText, wordIndex])
+  }, [loading, displayedText, wordIndex, chatid])
 
   return (
     <div className="max-w-full md:max-w-[50rem]">

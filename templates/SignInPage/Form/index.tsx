@@ -22,6 +22,15 @@ const Form = ({}: FormProps) => {
   const [isResetPasswordPage, setIsResetPasswordPage] = useState(false)
 
   useEffect(() => {
+    if (router.isReady) {
+      const { ref } = router.query
+      if (ref && typeof ref === 'string') {
+        setSelectedIndex(1)
+      }
+    }
+  }, [router.isReady, router.query])
+
+  useEffect(() => {
     // Check if URL matches reset password pattern
     const path = router.asPath
     const resetPasswordPattern = /^\/reset-password\/[^/]+\/[^/]+$/

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -18,6 +18,16 @@ const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
   const [error, setError] = useState<string | null>(null)
 
   const router = useRouter()
+
+  // Extract referral code from URL query parameters
+  useEffect(() => {
+    if (router.isReady) {
+      const { ref } = router.query
+      if (ref && typeof ref === 'string') {
+        setCode(ref)
+      }
+    }
+  }, [router.isReady, router.query])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

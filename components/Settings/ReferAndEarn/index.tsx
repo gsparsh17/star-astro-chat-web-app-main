@@ -1,7 +1,7 @@
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import { toast } from "react-hot-toast"
-import Modal from "@/components/Modal"
+import axios from "axios"
 import Field from "@/components/Field"
 import MultiSelect from "@/components/MultiSelect"
 import Notify from "@/components/Notify"
@@ -12,6 +12,35 @@ const ReferAndEarn = () => {
   const [link, setLink] = useState<string>("https://starastrogpt.com/sign-in?ref=STARASTRO25")
   const [selectedOptions, setSelectedOptions] = useState([])
   const [copied, setCopied] = useState<boolean>(false)
+
+  useEffect(() => {
+      const fetchUserData = async () => {
+        try {
+          const token = localStorage.getItem("accessToken");
+          if (!token) {
+            throw new Error("No access token found. Please log in.");
+          }
+  
+          const response = await axios.get(`${process.env.BACKEND_URL}/user`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+  
+          const userData = response.data.data;
+          console.log("User data:", userData);
+      if (userData.referralId) {
+          setReferralCode(userData.referralId)
+          setLink("https://starastrogpt.com/sign-in?ref="+userData.referralId)
+        }
+      }
+    catch (error) {
+      console.error("Error fetching user data:", error)
+    }
+  }
+      fetchUserData()
+    }
+  , [])
 
   const handleReferralCodeChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

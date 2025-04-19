@@ -350,77 +350,77 @@ useEffect(() => {
 // const [messageArray, setMessageArray] = useState<string[]>([])
 
 // Update the fetchData useEffect to modify chatData directly:
-useEffect(() => {
-  const fetchData = async () => {
-    if (topic) {
-      setLoading(true)
-      setLastMessage(message)
-      const payloadMessage = message
-      setMessage("")
-      try {
-        const token = localStorage.getItem("accessToken")
-        const response = await axios.post(
-          `${process.env.BACKEND_URL}/chat/${topic["data"]["_id"]}`,
-          {
-            question: payloadMessage,
-            ai_type: pathname == "/brahma-ai" ? "brahma" : 
-                    pathname == "/career-ai" ? "career" :
-                    pathname == "/numerology-ai" ? "numerology" :
-                    pathname == "/relationship-ai" ? "relationship" : ""
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          },
-        )
-        setShowDiv(false)
+// useEffect(() => {
+//   const fetchData = async () => {
+//     if (topic) {
+//       setLoading(true)
+//       setLastMessage(message)
+//       const payloadMessage = message
+//       setMessage("")
+//       try {
+//         const token = localStorage.getItem("accessToken")
+//         const response = await axios.post(
+//           `${process.env.BACKEND_URL}/chat/${topic["data"]["_id"]}`,
+//           {
+//             question: payloadMessage,
+//             ai_type: pathname == "/brahma-ai" ? "brahma" : 
+//                     pathname == "/career-ai" ? "career" :
+//                     pathname == "/numerology-ai" ? "numerology" :
+//                     pathname == "/relationship-ai" ? "relationship" : ""
+//           },
+//           {
+//             headers: {
+//               Authorization: `Bearer ${token}`,
+//               "Content-Type": "application/json",
+//             },
+//           },
+//         )
+//         setShowDiv(false)
         
-        // Update chatData directly instead of using responseContent
-        setChatData(prev => {
-          const newChats = [
-            ...(prev?.chats || []),
-            { 
-              role: "user" as const, 
-              text: payloadMessage, 
-              createdAt: new Date().toISOString() 
-            },
-            { 
-              role: "assistant" as const, 
-              text: response.data.data.chats.slice(-1)[0].text, 
-              createdAt: new Date().toISOString() 
-            }
-          ];
+//         // Update chatData directly instead of using responseContent
+//         setChatData(prev => {
+//           const newChats = [
+//             ...(prev?.chats || []),
+//             { 
+//               role: "user" as const, 
+//               text: payloadMessage, 
+//               createdAt: new Date().toISOString() 
+//             },
+//             { 
+//               role: "assistant" as const, 
+//               text: response.data.data.chats.slice(-1)[0].text, 
+//               createdAt: new Date().toISOString() 
+//             }
+//           ];
         
-          // Handle case where prev is null (new chat)
-          if (!prev) {
-            return {
-              _id: response.data.data._id || '', // Provide default empty string
-              title: 'New Chat', // Provide default title
-              chats: newChats,
-              createdAt: new Date().toISOString() // Current time as default
-            };
-          }
+//           // Handle case where prev is null (new chat)
+//           if (!prev) {
+//             return {
+//               _id: response.data.data._id || '', // Provide default empty string
+//               title: 'New Chat', // Provide default title
+//               chats: newChats,
+//               createdAt: new Date().toISOString() // Current time as default
+//             };
+//           }
         
-          // Case where prev exists (existing chat)
-          return {
-            ...prev,
-            chats: newChats
-          };
-        });
+//           // Case where prev exists (existing chat)
+//           return {
+//             ...prev,
+//             chats: newChats
+//           };
+//         });
         
-        setLoading(false)
-        setResponseReceived(true)
-        scrollToBottom()
-      } catch (error: any) {
-        // Error handling remains the same
-      }
-    }
-  }
+//         setLoading(false)
+//         setResponseReceived(true)
+//         scrollToBottom()
+//       } catch (error: any) {
+//         // Error handling remains the same
+//       }
+//     }
+//   }
 
-  fetchData()
-}, [topic])
+//   fetchData()
+// }, [topic])
 
   // useEffect(() => {
   //   if (responseContent.length > 0) {
@@ -610,17 +610,19 @@ const handleSendClick = async () => {
       : ""
   }
 >
-<div className="overflow-y-auto scroll-smooth scrollbar-none max-h-[75vh] 2xl:max-h-[82vh]" style={{ 
-    position: 'relative',
-    zIndex: -1 // Explicitly set lower than dropdown
-  }}>
+
     {showDiv && !chatData && !loading ? (
-      <div className="questions-list grid gap-4 -z-1">
-        <div className="text-center -z-1">
+      <div
+      className="py-0 overflow-y-auto scroll-smooth scrollbar-none sm:max-h-[80vh] 2xl:max-h-[72vh]"
+      // style={{ maxHeight: "70vh" }}
+      ref={chatContainerRef}
+    >
+      <div className="questions-list grid gap-4">
+        <div className="mb-2 text-center">
           <div className="h3 leading-[4rem] 2xl:mb-2 2xl:h4">
             Welcome to Star Astro
           </div>
-          <div className="body1 md:text-lg sm:text-sm 2xl:text-2xl text-n-4">
+          <div className="body1 text-n-4 2xl:text-lg">
             Chat with the smartest AI - Experience the power of AI with us
           </div>
         </div>
@@ -629,12 +631,24 @@ const handleSendClick = async () => {
           items={navigation}
         />
       </div>
+      </div>
     ) : loading && !chatData ? (
+      <div
+    className="py-0 overflow-y-auto scroll-smooth scrollbar-none sm:max-h-[80vh] 2xl:max-h-[72vh]"
+    // style={{ maxHeight: "70vh" }}
+    ref={chatContainerRef}
+  >
       <div className="flex justify-center py-10">
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-1"></div>
       </div>
+      </div>
     ) : chatData?.chats?.length ? (
       <>
+      <div
+    className={chatid?(`py-0 overflow-y-auto scroll-smooth scrollbar-none sm:max-h-[80vh] 2xl:max-h-[72vh]`):(`py-0 overflow-y-auto scroll-smooth scrollbar-none sm:max-h-[60vh] 2xl:max-h-[54vh]`)}
+    // style={{ maxHeight: "70vh" }}
+    ref={chatContainerRef}
+  >
         {chatData.chats.map((chat, index) => (
           <div key={index} className="mt-10">
             {chat.role === "user" ? (
@@ -645,13 +659,15 @@ const handleSendClick = async () => {
             ) : (
               <Answer 
                 time={new Date(chat.createdAt || Date.now()).toLocaleTimeString()}
+                chatid={chatid}
               >
                 {chat.text}
               </Answer>
             )}
           </div>
         ))}
-        {loading && (
+        </div>
+        {/* {loading && (
           <div className="mt-10">
             <Answer
               loading
@@ -660,18 +676,24 @@ const handleSendClick = async () => {
               onTypingComplete={() => setIsTyping(false)}
             />
           </div>
-        )}
+        )} */}
       </>
     ) : (
+      <div
+    className="py-0 overflow-y-auto scroll-smooth scrollbar-none sm:max-h-[80vh] 2xl:max-h-[72vh]"
+    // style={{ maxHeight: "70vh" }}
+    ref={chatContainerRef}
+  >
       <div className="py-2 text-center text-n-4">
         {chatid ? "No messages in this chat yet" : "Select a chat to view messages"}
       </div>
+      </div>
     )}
-  </div>
+  
 </Chat>
-{pathname!="/" && (
+{pathname!="/" && !chatid && (
   <>
-          <div className="flex items-center overflow-x-auto scrollbar-hide px-8 py-4 sm:px-2 md:px-2 lg:px-4 xl:px-12">
+          <div className="flex items-center overflow-x-auto scrollbar-none scrollbar-hide lg:scrollbar-hide sm:px-2 md:px-2 lg:px-4">
             <div className="flex flex-nowrap gap-4 px-4">
               {aiKundliQue.map((item) => (
                 <div
@@ -684,6 +706,7 @@ const handleSendClick = async () => {
               ))}
             </div>
           </div>
+          {!chatid && (
           <Message
             value={message}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -693,7 +716,8 @@ const handleSendClick = async () => {
             isSending={loading}
             onKeyPress={handleKeyPress}
             // disabled={loading}
-          />{" "}
+          />
+        )}
         </>
       )}
         </>

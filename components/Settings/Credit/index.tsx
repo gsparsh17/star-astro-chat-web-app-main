@@ -58,7 +58,7 @@ const Credits = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="">
+      <div className="text-center">
         <span className="text-6xl font-bold text-n-3">{walletBalance}</span>{" "}
         <span className="text-lg text-gray-600">credits</span>
       </div>
