@@ -35,7 +35,7 @@ const Credits = () => {
           wallet: JSON.stringify(userData.wallet),
         }
 
-        // localStorage.setItem("user", JSON.stringify(minimalUserData))
+        localStorage.setItem("user", JSON.stringify(minimalUserData))
       }
     } catch (error: any) {
       console.error("Error fetching user data:", error)
