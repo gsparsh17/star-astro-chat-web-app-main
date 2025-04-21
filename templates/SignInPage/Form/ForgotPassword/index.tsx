@@ -95,7 +95,7 @@ const ForgotPassword = ({ onClick }: ForgotPasswordProps) => {
           icon="email"
           type="email"
           value={email}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setEmail(e.target.value)}
           required
         />
         {error && <p className="text-red-500 mb-4">{error}</p>}

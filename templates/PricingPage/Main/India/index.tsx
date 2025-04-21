@@ -129,7 +129,7 @@ useEffect(() => {
       const res = await axios.post(
         `${process.env.BACKEND_URL}/payment/stripe/order`,
         {
-          plan: "basic", // Use the actual plan key instead of hardcoded "basic"
+          plan: planKey, // Use the actual plan key instead of hardcoded "basic"
           promo_code: promoVal,
         },
         {

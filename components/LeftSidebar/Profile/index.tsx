@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "@/components/Image";
 import axios from "axios";
@@ -22,6 +23,7 @@ const Profile = ({ visible }: ProfileProps) => {
   const [userDob, setUserDob] = useState<string | null>(null);
   const [userPob, setUserPob] = useState<string | null>(null);
   const [visibleSettings, setVisibleSettings] = useState(false);
+  const [countryCode, setCountryCode] = useState<string | null>(null);
 
   // Check if any required profile field is missing
   useEffect(() => {
@@ -77,29 +79,28 @@ const Profile = ({ visible }: ProfileProps) => {
     fetchUserData();
   }, []);
 
+  useEffect(() => {
+    const fetchCountryCode = async () => {
+      try {
+        const response = await axios.get(`${process.env.BACKEND_URL}/ip2location`);
+        if (response.data.status === "success") {
+          setCountryCode(response.data.data.countryCode);
+          // setCountryCode("IN"); // For testing purposes
+        }
+      } catch (error) {
+        console.error("Error fetching country code:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCountryCode();
+  }, []);
+  const router = useRouter();
   const avatarImagePath =
     userProfilePic ||
     (userGender === "male" ? "/images/Male.png" : "/images/Female.png");
 
-  const handleManagePlan = async () => {
-    try {
-      const res = await axios.post(
-        `${process.env.BACKEND_URL}/payment/create-portal-session`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
-      const { session_url } = res.data;
-      if (session_url) {
-        window.open(session_url, "_self", "noreferrer");
-      }
-    } catch (error) {
-      console.error("Error managing plan:", error);
-    }
-  };
 
   const handleImageClick = () => {
     if (!isProfileComplete) {
@@ -175,14 +176,14 @@ const Profile = ({ visible }: ProfileProps) => {
                   className="btn-white w-full mt-2 text-sm h-10"
                   href="/pricing"
                 >
-                  Subscribe Now
+                  {countryCode==="IN"?"Buy Plans":"Subscribe Now"}
                 </Link>
               ) : (
                 <button
                   className="btn-stroke-dark w-full mt-2"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleManagePlan();
+                    router.push("/pricing");
                   }}
                 >
                   Manage Plan

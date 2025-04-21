@@ -305,10 +305,10 @@ useEffect(() => {
     setHasDismissedProfileDialog(true)
   }
 
-  const handleProfileSaved = (updatedUserData: { gender: string; first_name: string; profile_image: string }) => {
+  const handleProfileSaved = (updatedUserData: { gender: string; first_name: string; profile_image?: string }) => {
     setUserGender(updatedUserData.gender)
     setUserName(updatedUserData.first_name)
-    setUserProfilePic(updatedUserData.profile_image)
+    setUserProfilePic(updatedUserData.profile_image || "") // Handle undefined case
     setVisibleSettings(false)
     setShowProfileDialog(false)
   }
@@ -659,7 +659,7 @@ const handleSendClick = async () => {
             ) : (
               <Answer 
                 time={new Date(chat.createdAt || Date.now()).toLocaleTimeString()}
-                chatid={chatid}
+                chatid={Array.isArray(chatid) ? chatid[0] : chatid}
               >
                 {chat.text}
               </Answer>
@@ -1001,6 +1001,7 @@ const handleSendClick = async () => {
               !flagPartnerAddress && "border-red-500"
             )}
             {...bindPartnerInput}
+            value={String(bindPartnerInput.value || "")} // Ensure value is a string
           />
           {isPartnerBusy && (
             <div className="w-4 h-4 border-2 border-dashed rounded-full border-slate-500 animate-spin ml-2"></div>
@@ -1010,6 +1011,7 @@ const handleSendClick = async () => {
           <ul
             {...bindPartnerOptions}
             className="absolute w-full z-10 mt-1 overflow-y-auto max-h-60 divide-gray-100 rounded-md dark:bg-n-5 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            ref={bindPartnerOptions.ref as unknown as React.RefObject<HTMLUListElement>}
           >
             {partnerSuggestions.map((suggestion, index) => (
               <li
@@ -1019,6 +1021,13 @@ const handleSendClick = async () => {
                 )}
                 key={index}
                 {...bindPartnerOption}
+                onClick={(e) => {
+                  const target = e.target as HTMLElement;
+                  const closestElement = target.closest("li");
+                  if (closestElement) {
+                    selectPartnerOption(index);
+                  }
+                }}
               >
                 {suggestion.label}
               </li>

@@ -70,7 +70,7 @@ const DeleteUserForm = () => {
     }
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setConfirmationText(e.target.value)
     if (errorMessage) setErrorMessage("")
   }

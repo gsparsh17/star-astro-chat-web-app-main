@@ -701,8 +701,18 @@ type EditProfileProps = {
 
 const EditProfile = ({ setVisibleSettings, onSave }: EditProfileProps) => {
   const router = useRouter();
-  const userStr = localStorage.getItem("user");
-  console.log("initial data", userStr);
+  // const userStr = localStorage.getItem("user");
+  const [userData, setUserData] = useState(null);
+const [isClient, setIsClient] = useState(false);
+
+useEffect(() => {
+  setIsClient(true);
+  const user = localStorage.getItem("user");
+  if (user) {
+    setUserData(JSON.parse(user));
+  }
+}, []);
+  console.log("initial data", userData);
 
   // Initialize user data with defaults
   const initialUser = {
@@ -725,9 +735,9 @@ const EditProfile = ({ setVisibleSettings, onSave }: EditProfileProps) => {
 
   // Parse user data if it exists
   let parsedUser = initialUser;
-if (userStr) {
+if (userData) {
   try {
-    parsedUser = JSON.parse(userStr);
+    parsedUser = userData;
     // Remove the name splitting logic since we have separate first_name and last_name
     parsedUser = {
       ...parsedUser,
@@ -742,12 +752,13 @@ if (userStr) {
 
   const [user, setUser] = useState(parsedUser);
   const [objectURL, setObjectURL] = useState<string | null>(null);
-  const [astroMode, setAstroMode] = useState<string>(user.type || "vedic");
+  const [astroMode, setAstroMode] = useState<string | null>(user.type || "vedic");
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState<Address | null>(null);
   const [flagAddress, setFlagAddress] = useState(false);
   const [suggestions, setSuggestions] = useState<Address[]>([]);
   const [showDropdown, setShowDropdown] = useState(true);
+  const [inputValue, setInputValue] = useState<string>(""); // Define inputValue state
 
   const {
     register,
@@ -778,7 +789,7 @@ if (userStr) {
       location: user.place_of_birth || "",
     },
   });
-  const [inputValue, setInputValue] = useState(""); // Add this state for input value
+  // Removed inputValue state as bindInput handles the value
 
   useEffect(() => {
     if (user.place_of_birth) {
@@ -812,10 +823,13 @@ if (userStr) {
   const { bindInput, bindOptions, bindOption, isBusy, selectedIndex } =
     Autocomplete({
       onChange: (value: string) => {
-        handleSelect(value);
-        setInputValue(value); // Update input value as user types
+          const selectedAddress = suggestions.find((suggestion) => suggestion.label === value);
+          if (selectedAddress) {
+              handleSelect(selectedAddress);
+          }
+          // setInputValue(value); // Update input value as user types
       },
-      initialValue: user.place_of_birth || "", 
+      // initialValue: user.place_of_birth || "", 
       delay: 1000,
       source: async (search: string) => {
         try {
@@ -828,6 +842,7 @@ if (userStr) {
               },
             }
           );
+          console.log("Response data:", response.data);
 
           const newSuggestions = response.data.data.map((item: any) => ({
             label: item.display_name,
@@ -908,10 +923,10 @@ if (userStr) {
       // Update local storage and state
       const updatedUser = { ...user, ...updatedData };
       localStorage.setItem("user", JSON.stringify(updatedUser));
-      setUser(updatedUser);
+      setUser({ ...updatedUser, preferred_astrology: updatedUser.preferred_astrology || "vedic" });
       
       toast.success("Profile updated successfully!");
-      if (onSave) onSave(updatedData);
+      if (onSave) onSave({ ...updatedData, preferred_astrology: updatedData.preferred_astrology || "vedic" });
       setVisibleSettings(false);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -1184,13 +1199,13 @@ if (userStr) {
         <div className="relative">
           <div className="flex items-center w-full">
             <input
-              value={inputValue} // Ensure value is a primitive string
-              onChange={(e) => setInputValue(e.target.value)} // Update input value
               placeholder="Search for your birth location"
               className={twMerge(
                 "w-full h-13 px-3.5 bg-n-2 border-2 border-n-2 rounded-xl base2 text-n-7 outline-none transition-colors placeholder:text-n-4/50 focus:bg-transparent dark:bg-n-6 dark:border-n-6 dark:text-n-3 dark:focus:bg-transparent",
                 !flagAddress && "border-red-500"
               )}
+              {...bindInput}
+              value={String(bindInput.value || "")}
             />
             {isBusy && (
               <div className="w-4 h-4 border-2 border-dashed rounded-full border-slate-500 animate-spin ml-2"></div>
@@ -1198,7 +1213,7 @@ if (userStr) {
           </div>
           {showDropdown && suggestions.length > 0 && (
           <ul
-            {...bindOptions}
+            ref={bindOptions.ref as unknown as React.RefObject<HTMLUListElement>}
             className="absolute w-full z-10 mt-1 overflow-hidden divide-gray-100 rounded-md dark:bg-n-5 bg-white shadow-lg ring-1 ring-black ring-opacity-0 focus:outline-none gap-1"
           >
             {suggestions.map((suggestion, index) => (
@@ -1208,7 +1223,12 @@ if (userStr) {
                   selectedIndex === index && "bg-slate-300 dark:bg-n-4"
                 )}
                 key={index}
-                {...bindOption}
+                onClick={(e) => {
+                  const target = e.target as HTMLElement;
+                  if (target.closest("li")) {
+                    handleSelect(suggestion);
+                  }
+                }}
               >
                 <div className="flex items-center space-x-1">
                   <div>{suggestion.label}</div>

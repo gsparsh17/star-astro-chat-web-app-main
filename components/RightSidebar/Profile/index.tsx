@@ -46,6 +46,11 @@ const Profile = ({}: ProfileProps) => {
       onClick: () => router.push("/delete-user"), // Navigate to /delete-user
     },
     {
+      title: "Change Password",
+      icon: "lock",
+      onClick: () => router.push("/change-password"), 
+    },
+    {
       title: "Log out",
       icon: "logout",
       onClick: () => handleLogout(),

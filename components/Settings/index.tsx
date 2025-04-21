@@ -30,7 +30,7 @@ type AdditionalSettingsType = {
 type UserProfileData = {
   gender: string
   first_name: string
-  profile_image: string | undefined
+  profile_image?: string | undefined
 }
 
 type SettingsProps = {

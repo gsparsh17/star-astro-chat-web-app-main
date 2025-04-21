@@ -127,7 +127,7 @@ const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
         icon="email"
         type="email"
         value={email}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
           setEmail(e.target.value)
         }
         required
@@ -139,7 +139,7 @@ const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
         icon="lock"
         type="password"
         value={password}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
           setPassword(e.target.value)
         }
         required
@@ -151,7 +151,7 @@ const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
         icon="link"
         type="text"
         value={code}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
           setCode(e.target.value)
         }
       />

@@ -123,7 +123,7 @@ const Matchmaking = ({}: MainProps) => {
     selectedIndex,
     selectOption,
   } = Autocomplete({
-    onChange: (value: string) => handleSelect(value),
+    onChange: (value: Address) => handleSelect(value),
     delay: 1000,
     source: async (search: any) => {
       try {
@@ -828,6 +828,7 @@ const Matchmaking = ({}: MainProps) => {
           !flagAddress && "border-red-500"
         )}
         {...bindInput}
+        value={String(bindInput.value || "")}
       />
       {isBusy && (
         <div className="w-4 h-4 border-2 border-dashed rounded-full border-slate-500 animate-spin ml-2"></div>
@@ -837,6 +838,7 @@ const Matchmaking = ({}: MainProps) => {
       <ul
         {...bindOptions}
         className="absolute w-full z-10 mt-1 overflow-y-auto max-h-60 divide-gray-100 rounded-md dark:bg-n-5 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        ref={null} // Remove or replace with a compatible ref if needed
       >
         {suggestions.map((suggestion, index) => (
           <li
@@ -845,7 +847,13 @@ const Matchmaking = ({}: MainProps) => {
               selectedIndex === index && "bg-slate-300 dark:bg-n-4"
             )}
             key={index}
-            {...bindOption}
+            onClick={(e: React.MouseEvent<HTMLLIElement>) => {
+              const target = e.target as HTMLElement;
+              const closestLi = target.closest("li");
+              if (closestLi) {
+                selectOption(index);
+              }
+            }}
           >
             {suggestion.label}
           </li>

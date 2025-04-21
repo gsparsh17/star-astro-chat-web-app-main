@@ -126,7 +126,7 @@ const SignIn = ({ onForgotPassword }: SignInProps) => {
         placeholder="Username or email"
         icon="email"
         value={name}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
           setName(e.target.value)
         }
         required
@@ -138,7 +138,7 @@ const SignIn = ({ onForgotPassword }: SignInProps) => {
         icon="lock"
         type="password"
         value={password}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
           setPassword(e.target.value)
         }
         required

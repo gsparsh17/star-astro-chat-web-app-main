@@ -20,7 +20,7 @@ const HomePage = () => {
             <div className="p-12 lg:px-8 md:pt-16 md:px-5 md:pb-8">
               <div className="flex md:block">
                 <div className="grow pl-12 md:pl-0">
-                  <EditProfile />
+                  <EditProfile setVisibleSettings={(visible) => console.log("Settings visibility:", visible)} />
                 </div>
               </div>
             </div>

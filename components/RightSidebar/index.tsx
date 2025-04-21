@@ -56,6 +56,9 @@ const RightSidebar = ({ className, visible }: RightSidebarProps) => {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
+          },
+          params: {
+            page_size: 100,
           }
         })
         console.log(response.data.data);
@@ -100,7 +103,7 @@ const RightSidebar = ({ className, visible }: RightSidebarProps) => {
           {/* <div className="ml-3 px-2 bg-n-3 rounded-lg caption1 text-n-4 dark:bg-n-5/50">
             {clean ? "0" : `${chatTitles.length}/100`}
           </div> */}
-          {!clean && chatTitles.length > 0 && (
+          {/* {!clean && chatTitles.length > 0 && (
             <button
               className="group relative ml-auto text-0"
               onClick={() =>
@@ -138,11 +141,11 @@ const RightSidebar = ({ className, visible }: RightSidebarProps) => {
                 Clear chat history
               </div>
             </button>
-          )}
+          )} */}
         </div>
         
         {/* Scrollable Chat History Container */}
-        <div className="grow overflow-y-auto scroll-smooth md:overflow-y-auto md:scroll-smooth px-6 md:px-3 border-b border-n-3 dark:border-n-5">
+        <div className="grow overflow-y-auto scroll-smooth md:overflow-y-auto md:scroll-smooth px-6 md:px-3 border-b max-h-44 border-n-3 dark:border-n-5">
           {clean ? (
             <ChatEmpty />
           ) : loading ? (

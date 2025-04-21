@@ -121,9 +121,8 @@ const ResetPassword: NextPageWithAuth<ResetPasswordProps> = ({ userId, token, on
               icon="lock"
               type="password"
               value={newPassword}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setNewPassword(e.target.value)}
               required
-              minLength={8}
             />
             <Field
               className="mb-6"
@@ -132,9 +131,8 @@ const ResetPassword: NextPageWithAuth<ResetPasswordProps> = ({ userId, token, on
               icon="lock"
               type="password"
               value={confirmPassword}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setConfirmPassword(e.target.value)}
               required
-              minLength={8}
             />
             {error && <p className="text-red-500 mb-4">{error}</p>}
             <button 

@@ -6,7 +6,11 @@ const Credits = () => {
   const router = useRouter()
   const [walletBalance, setWalletBalance] = useState<number | null>(null) // State for wallet balance
   const [expirationDate, setExpirationDate] = useState<string>("")
-  const token = localStorage.getItem('accessToken')
+  const [token, setToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    setToken(localStorage.getItem('accessToken'))
+  }, [])
   const fetchUserData = async () => {
     try {
       const userResponse = await axios.get(`${process.env.BACKEND_URL}/user`, {
@@ -45,10 +49,10 @@ const Credits = () => {
       year: "numeric",
       month: "long",
       day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      timeZoneName: "short",
+      // hour: "2-digit",
+      // minute: "2-digit",
+      // second: "2-digit",
+      // timeZoneName: "short",
     });
   };
 
